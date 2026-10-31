@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111019">
+  <meta name="description" content="TradeMind — private trading journal and performance coach">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <title>TradeMind — Trading Performance Journal</title>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">T</span><span>TRADE<span class="violet">MIND</span><small>TRADING PERFORMANCE OS</small></span></a>
+      <nav id="nav">
+        <button class="nav-item active" data-page="dashboard">▦ <span>Dashboard</span></button>
+        <button class="nav-item" data-page="trades">▤ <span>Trade journal</span></button>
+        <button class="nav-item" data-page="new-trade">＋ <span>Log a trade</span></button>
+        <button class="nav-item" data-page="emotions">◉ <span>Emotional journal</span></button>
+        <button class="nav-item" data-page="coach">✧ <span>AI trading coach</span></button>
+        <button class="nav-item" data-page="method">◎ <span>Method B tracker</span></button>
+        <button class="nav-item" data-page="analytics">▥ <span>Analytics</span></button>
+        <button class="nav-item" data-page="weekly">▣ <span>Weekly review</span></button>
+        <button class="nav-item" data-page="risk">⬡ <span>Risk manager</span></button>
+        <button class="nav-item" data-page="life">☼ <span>Life journal</span></button>
+        <button class="nav-item" data-page="settings">⚙ <span>Settings & sync</span></button>
+      </nav>
+      <div class="sidebar-bottom"><span class="status-dot"></span><span id="connection-label">Local mode · ready</span></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn mobile-menu" id="menu-btn" aria-label="Open menu">☰</button>
+        <div><div class="eyebrow" id="page-eyebrow">PERFORMANCE OVER PROFIT</div><h1 id="page-title">Dashboard</h1></div>
+        <div class="top-actions"><span class="sync-pill" id="sync-state">● Offline-ready</span><button class="primary small" data-goto="new-trade">＋ Add trade</button></div>
+      </header>
+
+      <section class="page active" id="page-dashboard">
+        <div class="welcome-row"><div><h2>Your trading, measured.</h2><p class="muted">Review the process. Improve the decisions. Let results follow.</p></div><div class="date-chip" id="today-label"></div></div>
+        <div class="stats-grid">
+          <article class="stat-card"><span>Total trades</span><strong id="stat-trades">0</strong><small>Recorded trades</small></article>
+          <article class="stat-card"><span>Win rate</span><strong id="stat-win">—</strong><small>Closed trades only</small></article>
+          <article class="stat-card"><span>Net P/L</span><strong id="stat-pnl">0.00</strong><small>From recorded outcomes</small></article>
+          <article class="stat-card"><span>Method B compliance</span><strong id="stat-compliance">—</strong><small>Checklist completion</small></article>
+        </div>
+        <div class="content-grid">
+          <article class="panel"><div class="panel-head"><div><h3>Recent trades</h3><p class="muted">Your latest journal entries</p></div><button class="text-btn" data-goto="trades">View all →</button></div><div id="recent-trades" class="trade-list empty">No trades yet. Add your first trade to begin building your data.</div></article>
+          <article class="panel coach-preview"><div class="panel-head"><div><h3>Coach snapshot</h3><p class="muted">Rule-based analysis · free</p></div><span class="spark">✧</span></div><div id="dashboard-insight" class="insight">Log a few trades and emotional check-ins. TradeMind will identify patterns from your own records.</div><button class="secondary full" data-goto="coach">Open trading coach</button></article>
+        </div>
+        <article class="panel"><div class="panel-head"><div><h3>Trading rules</h3><p class="muted">Your Method B execution sequence</p></div><button class="text-btn" data-goto="method">Review rules →</button></div><div class="rule-strip"><span>01 · H4 zone</span><span>02 · H1 order block</span><span>03 · M15 close</span><span>04 · Next candle break</span><span>05 · Risk check</span></div></article>
+      </section>
+
+      <section class="page" id="page-trades">
+        <div class="section-intro"><div><h2>Trade journal</h2><p class="muted">Trades, screenshots, recordings and decision notes in one place.</p></div><button class="primary" data-goto="new-trade">＋ Log a trade</button></div>
+        <div class="toolbar"><input id="trade-search" placeholder="Search pair, setup or notes…"><select id="trade-filter"><option value="all">All outcomes</option><option value="Win">Wins</option><option value="Loss">Losses</option><option value="Breakeven">Breakeven</option><option value="Open">Open</option></select></div>
+        <div id="trade-table" class="panel table-wrap"><div class="empty">Your recorded trades will appear here.</div></div>
+      </section>
+
+      <section class="page" id="page-new-trade">
+        <div class="section-intro"><div><h2>Record a trade</h2><p class="muted">Capture the setup, execution, emotions and evidence. Required fields are marked.</p></div></div>
+        <form id="trade-form" class="panel form-panel">
+          <div class="form-section"><h3>Trade details</h3><div class="form-grid">
+            <label>Instrument *<select name="pair" required><option value="">Select pair</option><option>XAUUSD</option><option>EURUSD</option><option>GBPUSD</option><option>USDJPY</option><option>AUDJPY</option><option>Other</option></select></label>
+            <label>Direction *<select name="direction" required><option value="">Select</option><option>Buy</option><option>Sell</option></select></label>
+            <label>Trade date *<input name="date" type="datetime-local" required></label>
+            <label>Session<select name="session"><option>London</option><option>New York</option><option>Asian</option><option>Other</option></select></label>
+            <label>Entry price<input name="entry" type="number" step="any" placeholder="e.g. 1.08500"></label>
+            <label>Stop loss<input name="sl" type="number" step="any"></label>
+            <label>Take profit<input name="tp" type="number" step="any"></label>
+            <label>Lot size<input name="lot" type="number" step="any" min="0"></label>
+            <label>Risk (%)<input name="risk" type="number" step="any" min="0" max="100" placeholder="e.g. 1"></label>
+            <label>Result<select name="outcome"><option>Open</option><option>Win</option><option>Loss</option><option>Breakeven</option></select></label>
+            <label>Net P/L (account currency)<input name="pnl" type="number" step="any" placeholder="Use negative for loss"></label>
+            <label>Realised R multiple<input name="r" type="number" step="any" placeholder="e.g. 2 or -1"></label>
+          </div></div>
+          <div class="form-section"><h3>Setup & execution</h3><div class="form-grid">
+            <label>Strategy<select name="strategy"><option>Method B</option><option>Other / experimental</option></select></label>
+            <label>Setup grade<select name="grade"><option>Unrated</option><option>A+</option><option>A</option><option>B</option><option>C</option><option>Invalid</option></select></label>
+          </div><label>Trade thesis / why did you enter?<textarea name="thesis" rows="3" placeholder="H4 context, H1 order block, M15 confirmation…"></textarea></label><label>Execution notes<textarea name="notes" rows="3" placeholder="What did you do well? What could be improved?"></textarea></label></div>
+          <div class="form-section"><h3>Method B checklist</h3><p class="muted tiny">Tick only what you actually verified. A checklist is not proof that the chart conditions occurred.</p><div class="check-grid">
+            <label class="check"><input type="checkbox" name="h4"> H4 zone identified</label>
+            <label class="check"><input type="checkbox" name="h1"> H1 order block inside / near H4 zone</label>
+            <label class="check"><input type="checkbox" name="m15close"> M15 candle closed beyond OB boundary</label>
+            <label class="check"><input type="checkbox" name="break"> Immediately following M15 candle broke confirmation high / low</label>
+            <label class="check"><input type="checkbox" name="riskcheck"> Risk and stop loss checked</label>
+            <label class="check"><input type="checkbox" name="rrcheck"> Planned RR met my minimum</label>
+          </div></div>
+          <div class="form-section"><h3>Emotions</h3><div class="form-grid">
+            <label>Before trade<select name="emotionBefore"><option>Calm</option><option>Confident</option><option>Fearful</option><option>Anxious</option><option>Impatient</option><option>FOMO</option><option>Angry</option><option>Tired</option><option>Overconfident</option></select></label>
+            <label>Before intensity (1–5)<input name="intensityBefore" type="number" min="1" max="5" value="3"></label>
+            <label>After trade<select name="emotionAfter"><option>Calm</option><option>Satisfied</option><option>Frustrated</option><option>Regretful</option><option>Excited</option><option>Disappointed</option><option>Relieved</option></select></label>
+            <label>After intensity (1–5)<input name="intensityAfter" type="number" min="1" max="5" value="3"></label>
+          </div><label>What influenced your emotions?<textarea name="emotionNotes" rows="2" placeholder="Sleep, previous loss, urgency, confidence, outside stress…"></textarea></label></div>
+          <div class="form-section"><h3>Evidence uploads</h3><p class="muted tiny">Choose screenshots, screen recordings or voice notes. Large video files may exceed your browser's local storage; cloud upload requires configuring Supabase in Settings.</p><label class="upload-box">＋ Add screenshots / screen recordings / voice notes<input id="media-files" type="file" accept="image/*,video/mp4,video/quicktime,audio/*" multiple hidden></label><div id="selected-files" class="file-list"></div></div>
+          <div class="form-actions"><button type="button" class="secondary" data-goto="trades">Cancel</button><button class="primary" type="submit">Save trade locally</button></div>
+          <p class="tiny muted" id="form-message">Your entry is saved on this device first. Sync it to your private cloud account when configured.</p>
+        </form>
+      </section>
+
+      <section class="page" id="page-emotions">
+        <div class="section-intro"><div><h2>Emotional journal</h2><p class="muted">Track the state you bring into the market, not just the outcome you leave with.</p></div></div>
+        <form id="emotion-form" class="panel form-panel">
+          <div class="form-grid"><label>Date & time<input type="datetime-local" name="date" required></label><label>Context<select name="context"><option>Before trading</option><option>During trading</option><option>After trading</option><option>End of day</option></select></label><label>Emotion<select name="emotion"><option>Calm</option><option>Confident</option><option>Fearful</option><option>Anxious</option><option>Impatient</option><option>FOMO</option><option>Angry</option><option>Tired</option><option>Overconfident</option><option>Frustrated</option><option>Satisfied</option></select></label><label>Intensity (1–5)<input name="intensity" type="number" min="1" max="5" value="3"></label></div>
+          <label>What triggered this state?<textarea name="trigger" rows="3" placeholder="Describe the situation without judging yourself."></textarea></label><label>What action will you take?<textarea name="action" rows="2" placeholder="Pause, reduce size, stop for the day, follow the checklist…"></textarea></label><button class="primary">Save emotional check-in</button>
+        </form>
+        <div class="panel"><h3>Recent check-ins</h3><div id="emotion-list" class="empty">No emotional check-ins yet.</div></div>
+      </section>
+
+      <section class="page" id="page-coach">
+        <div class="section-intro"><div><h2>AI trading coach</h2><p class="muted">Free, evidence-based coaching from your saved journal data. No paid AI API or subscription.</p></div><span class="free-tag">FREE CORE COACH</span></div>
+        <div class="notice"><strong>How this works:</strong> The built-in coach uses transparent rules and statistics. It does not pretend to watch or understand your video recordings. Video review is manual until a genuinely free, capable model is connected.</div>
+        <div class="coach-grid"><article class="panel"><h3>Performance observations</h3><div id="coach-findings" class="finding-list"></div></article><article class="panel"><h3>Improvement actions</h3><div id="coach-actions" class="finding-list"></div></article></div>
+        <article class="panel"><h3>Ask your journal</h3><p class="muted tiny">Answers are generated from your local records and predefined analysis rules.</p><div class="ask-row"><input id="coach-question" placeholder="e.g. What should I improve this week?"><button class="primary" id="ask-coach">Ask</button></div><div id="coach-answer" class="answer-box">Your coach's answers will appear here.</div></article>
+      </section>
+
+      <section class="page" id="page-method">
+        <div class="section-intro"><div><h2>Method B tracker</h2><p class="muted">Your official H4 → H1 → M15 entry model.</p></div></div>
+        <div class="panel"><div class="method-step"><b>01</b><div><h3>H4 zone</h3><p class="muted">Identify a relevant H4 supply or demand zone.</p></div></div><div class="method-step"><b>02</b><div><h3>H1 order block</h3><p class="muted">Find an H1 order block inside or near the H4 zone.</p></div></div><div class="method-step"><b>03</b><div><h3>M15 close beyond the boundary</h3><p class="muted">Wait for an M15 candle to close beyond the relevant H1 order block boundary.</p></div></div><div class="method-step"><b>04</b><div><h3>Next-candle break</h3><p class="muted">Enter only when the immediately following M15 candle breaks the confirmation candle's high (buy) or low (sell).</p></div></div><div class="method-step"><b>05</b><div><h3>Risk and execution</h3><p class="muted">Define invalidation, stop loss, position size and planned reward-to-risk before entry.</p></div></div></div>
+        <div class="notice warning">The journal records what you confirm. It does not automatically verify chart structure or place trades. Never treat a completed checklist as a guaranteed high-probability signal.</div>
+      </section>
+
+      <section class="page" id="page-analytics">
+        <div class="section-intro"><div><h2>Analytics</h2><p class="muted">Use recorded data to evaluate the process and outcomes.</p></div><button class="secondary" id="export-csv">Export CSV</button></div>
+        <div class="stats-grid"><article class="stat-card"><span>Average R</span><strong id="avg-r">—</strong></article><article class="stat-card"><span>Profit factor</span><strong id="profit-factor">—</strong></article><article class="stat-card"><span>Checklist adherence</span><strong id="adherence">—</strong></article><article class="stat-card"><span>Emotional check-ins</span><strong id="emotion-count">0</strong></article></div>
+        <div class="content-grid"><article class="panel"><h3>Results by instrument</h3><div id="pair-breakdown" class="breakdown empty">Not enough data yet.</div></article><article class="panel"><h3>Results by session</h3><div id="session-breakdown" class="breakdown empty">Not enough data yet.</div></article></div>
+        <div class="panel"><h3>Important interpretation</h3><p class="muted">A small sample can be misleading. Compare similar market conditions, use enough trades, include costs and slippage where possible, and do not infer causation from emotion correlations.</p></div>
+      </section>
+
+      <section class="page" id="page-weekly">
+        <div class="section-intro"><div><h2>Weekly review</h2><p class="muted">A repeatable review of execution, psychology and risk.</p></div><button class="primary" id="generate-week">Generate this week's review</button></div>
+        <div id="weekly-report" class="panel report"><div class="empty">Generate a review after logging trades. TradeMind will calculate your recorded metrics and produce practical next-week actions.</div></div>
+      </section>
+
+      <section class="page" id="page-risk">
+        <div class="section-intro"><div><h2>Risk manager</h2><p class="muted">Position sizing calculator. Verify pip value and contract specifications with your broker.</p></div></div>
+        <div class="panel form-panel"><div class="form-grid"><label>Account balance<input id="risk-balance" type="number" min="0" step="any" placeholder="1000"></label><label>Risk per trade (%)<input id="risk-percent" type="number" min="0" max="100" step="any" value="1"></label><label>Stop distance (pips / points)<input id="risk-distance" type="number" min="0" step="any" placeholder="20"></label><label>Value per pip per lot (account currency)<input id="pip-value" type="number" min="0" step="any" placeholder="Broker-specific"></label></div><button class="primary" id="calculate-risk">Calculate position size</button><div class="risk-result" id="risk-result">Enter your values to calculate a position size estimate.</div><p class="tiny muted">This is a calculator, not broker execution. Gold point value, JPY pip conventions, account currency conversion and contract sizes vary. Confirm before trading.</p></div>
+      </section>
+
+      <section class="page" id="page-life">
+        <div class="section-intro"><div><h2>Life journal</h2><p class="muted">Capture the lifestyle variables that may affect your trading focus.</p></div></div>
+        <form id="life-form" class="panel form-panel"><div class="form-grid"><label>Date<input type="date" name="date" required></label><label>Sleep (hours)<input type="number" name="sleep" min="0" max="24" step=".5"></label><label>Exercise (minutes)<input type="number" name="exercise" min="0"></label><label>Focus (1–5)<input type="number" name="focus" min="1" max="5"></label><label>Stress (1–5)<input type="number" name="stress" min="1" max="5"></label></div><label>Daily reflection<textarea name="notes" rows="3" placeholder="What affected your energy, focus or discipline today?"></textarea></label><button class="primary">Save daily entry</button></form><div class="panel"><h3>Recent life entries</h3><div id="life-list" class="empty">No daily entries yet.</div></div>
+      </section>
+
+      <section class="page" id="page-settings">
+        <div class="section-intro"><div><h2>Settings & cloud sync</h2><p class="muted">Private journal account plus Google Drive media storage.</p></div></div>
+        <div class="notice warning"><strong>Cloud setup is not activated yet.</strong> This source project works locally and offline. To enable private email/password accounts and journal sync, configure Supabase below. Trade recordings can be stored in your own Google Drive. Do not publish your service-role key.</div>
+        <div class="panel form-panel"><h3>Supabase connection</h3><label>Project URL<input id="supabase-url" placeholder="https://your-project.supabase.co"></label><label>Anon / publishable key<input id="supabase-key" placeholder="Public anon key (safe for browser when RLS is configured)"></label><div class="form-grid"><label>Email<input id="auth-email" type="email" placeholder="you@example.com"></label><label>Password<input id="auth-password" type="password" placeholder="At least 8 characters"></label></div><div class="button-row"><button class="primary" id="sign-up">Create account</button><button class="secondary" id="sign-in">Sign in</button><button class="secondary" id="sign-out">Sign out</button></div><p id="auth-status" class="tiny muted">Not connected.</p><button class="secondary" id="cloud-sync">Sync journal to cloud</button></div>
+        <div class="panel form-panel"><h3>Google Drive video & screenshot storage</h3><p class="muted">Connect your Google account. TradeMind will create a private <b>TradeMind</b> folder in your Drive and upload locally saved trade evidence when you choose to sync. Google Drive free storage is subject to your account quota.</p><label>Google OAuth Web Client ID<input id="google-client-id" placeholder="xxxx.apps.googleusercontent.com"></label><div class="button-row"><button class="primary" id="drive-connect">Connect Google Drive</button><button class="secondary" id="drive-upload">Upload pending media</button><button class="secondary" id="drive-disconnect">Disconnect</button></div><p id="drive-status" class="tiny muted">Google Drive not connected.</p><p class="tiny muted">Setup requires a Google Cloud project, Google Drive API enabled, and an OAuth 2.0 Web client ID with this website origin authorised.</p></div>
+        <div class="panel"><h3>Data management</h3><div class="button-row"><button class="secondary" id="backup-json">Download full local backup</button><label class="secondary file-button">Restore backup<input type="file" id="restore-json" accept="application/json" hidden></label><button class="danger" id="clear-data">Delete all local data</button></div><p class="tiny muted">Back up before clearing browser data. Local videos can consume substantial storage. Cloud sync requires your configured project, authentication and database schema.</p></div>
+        <div class="panel"><h3>Free AI policy</h3><p class="muted">The built-in coach runs deterministic analysis in your browser. It requires no paid API, no subscription and no AI account. It is not a generative language model and cannot independently interpret chart videos. Advanced model connections are optional, never mandatory.</p></div>
+      </section>
+
+      <footer>TRADEMIND · PRIVATE BY DESIGN · PROCESS OVER PROFIT</footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="app.js"></script>
+</body>
+</html>
